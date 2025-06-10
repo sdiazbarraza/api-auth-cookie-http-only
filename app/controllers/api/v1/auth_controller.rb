@@ -16,7 +16,7 @@ module Api
             return render(json: { error: "Not found" }, status: 404) unless checked
 
             jwt = set_cookie(user.id, user.email)
-            render(json: { message: "Welcome back!", jwt: }, status: :ok)
+            render(json: { message: "Welcome back!", user: user.email}, status: :ok)
         end
 
         def signup
@@ -24,7 +24,7 @@ module Api
             user = User.create!(user_params)
 
             jwt = set_cookie(user.id, user.email)
-            render(json: { message: "Welcome", user: user.email, jwt: }, status: :ok)
+            render(json: { message: "Welcome", user: user.email}, status: :ok)
             rescue ActiveRecord::RecordInvalid => e
             render(json: { error: e.record.errors }, status: 422)
         end
